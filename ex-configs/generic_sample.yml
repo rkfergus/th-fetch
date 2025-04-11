@@ -1,0 +1,12 @@
+- name: sample up
+  url: https://google.com/
+- name: sample down
+  url: https://google.com/404
+  timeout: 1
+- name: bin up 
+  url: https://httpbin.org/
+- name: bin up - post
+  method: POST
+  url: https://httpbin.org/post
+- name: bin down - post
+  url: https://httpbin.org/post
