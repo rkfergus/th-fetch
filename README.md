@@ -1,7 +1,21 @@
-# Install
-
-# Run 
-
+# Install & Run
+1. Clone Repository 
+    ```
+    git clone https://github.com/rkfergus/th-fetch.git
+    cd th-fetch
+    ```
+2. Create Virtual Environment & Download Dependencies 
+    ```
+    python -m venv venv
+    source venv/bin/activate
+    pip install -r requirements.txt
+    ```
+3. Run the monitoring script and specify the config file. 
+    ```
+    python monitor.py <path-to-config>
+    # Example
+    python monitor.py ex-configs/generic_sample.yaml
+    ```
 # Issues Identified 
 1. Run time error occurs when no method is specified in the input yaml file. 
     - Error Message: 
