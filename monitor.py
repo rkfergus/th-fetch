@@ -11,7 +11,7 @@ LOGGING_LEVEL = 'INFO'
 MONITORING = True
 DEFAULT_TIMEOUT = 5
 DEFAULT_REQUEST_INTERVAL= 5
-DEFAULT_REPORTING_INTERVAL = 15
+DEFAULT_REPORTING_INTERVAL = 5
 domain_stats = defaultdict(lambda: {"up": 0, "total": 0})
 
 
@@ -78,7 +78,7 @@ def send_request(endpoint):
     Keyword arguments:
     endpoint -- dictionary containing endpoint information
     """
-    domain = endpoint["url"].split("//")[-1].split("/")[0]
+    domain = endpoint["url"].split("//")[-1].split("/")[0].split(":")[0]
     url = endpoint['url']
     method = endpoint.get('method', 'GET')
     headers = endpoint.get('headers')

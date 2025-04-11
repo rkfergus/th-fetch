@@ -1,5 +1,5 @@
 - name: sample up
-  url: https://google.com/
+  url: https://google.com:443/
 - name: sample down
   url: https://google.com/404
   timeout: 1

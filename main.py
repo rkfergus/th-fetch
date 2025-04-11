@@ -25,7 +25,7 @@ def increment_stats(domain, result):
 
 
 def send_request(endpoint): 
-    domain = endpoint["url"].split("//")[-1].split("/")[0]
+    domain = endpoint["url"].split("//")[-1].split("/")[0].split(":")[0]
     url = endpoint['url']
     method = endpoint.get('method', 'GET')
     headers = endpoint.get('headers')
