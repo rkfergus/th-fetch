@@ -1,3 +1,16 @@
+# Overview 
+
+This repository contains two monitoring scripts and several example input files. Both scripts accomplish the same goal; monitor the responses from the endpoints specified in the config file. Requests are sent and availability is reported every 15s by default. 
+
+The `main.py` script is a more direct solution while still fitting each requirement, while the `monitor.py` script contains additional changes. 
+
+These changes include:
+- Support for additional optional parameters in the config file
+- Implementing logging framework (increases readability during development and debugging)
+- Timestamps in reporting messages
+- More robust input validation
+
+
 # Install & Run
 1. Clone Repository 
     ```
