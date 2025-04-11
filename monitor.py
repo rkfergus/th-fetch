@@ -3,7 +3,6 @@ import yaml
 import requests
 import time
 from collections import defaultdict
-from termcolor import colored
 import logging
 import datetime
 
