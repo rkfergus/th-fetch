@@ -48,7 +48,7 @@ def check_health(endpoint):
 
     while MONITORING:
 
-        if DEFAULT_TIMEOUT < DEFAULT_INTERVAL:
+        if DEFAULT_TIMEOUT > DEFAULT_INTERVAL:
             print(f"Interval is less than timeout for {endpoint['url']}, which can cause serious performance issues")
 
         request_thread = threading.Thread(target=send_request, args=(endpoint,))
@@ -66,7 +66,6 @@ def monitor_endpoints(file_path):
         threading.Thread(target=check_health, args=(endpoint,)).start()
 
 
-import datetime
 # Log cumulative availability percentages
 def print_availability():
     while MONITORING:
