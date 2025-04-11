@@ -1,6 +1,8 @@
-# Overview 
+# HTTP Response Monitor
 
-This repository contains two monitoring scripts and several example input files. Both scripts accomplish the same goal; monitor the responses from the endpoints specified in the config file. Requests are sent and availability is reported every 15s by default. 
+## Overview 
+
+This repository contains two monitoring scripts, several example input files, and a handful of unit tests. Both scripts accomplish the same goal; monitor the responses from the endpoints specified in the config file. Requests are sent and cumulative availability is reported every 15s by default. 
 
 The `main.py` script is a more direct solution while still fitting each requirement, while the `monitor.py` script contains additional changes. 
 
@@ -11,7 +13,8 @@ These changes include:
 - More robust input validation
 
 
-# Install & Run
+## Install & Run
+
 1. Clone Repository 
     ```
     git clone https://github.com/rkfergus/th-fetch.git
@@ -29,7 +32,8 @@ These changes include:
     # Example
     python monitor.py ex-configs/generic_sample.yaml
     ```
-# Issues Identified 
+## Issues Identified 
+
 1. Run time error occurs when no method is specified in the input yaml file. 
     - Error Message: 
         ```Traceback (most recent call last):
@@ -50,6 +54,9 @@ These changes include:
 
     - Cause: In the check_health() method, the 'method' variable is None when the HTTP method is not specified in the input yaml file. This variable is passed as a parameter to requests.request(). Method is a required parameter, so an error is thrown when the monitoring script calls that function with the value None for method. 
     - Resolution: Per specifications, the default HTTP method is GET. In order to resolve the error and adhere to our requirements, the 'method' variable in the check_health() needs to default to GET if one is not specified in the yaml file. 
+3. Ports on the same domain handled indepentdently 
+    - Problem: When parsing the domain from the URL, port number is still included. As is "example.org" and "example.org:443" are reported as separate domains and their availability is calculated independently. 
+    - Resolution: Add an additional .split() to the line where parsing occurs, splitting on ":" and returning only the first value. 
 2. Request method not called with a timeout value
     - Problem: The requirements state that a response time of more than 500ms is considered DOWN, whether the eventual response is valid or not. As written, the monitoring script will wait indefinitely for a request to respond and only accounts for response code. 
     - Cause: No timeout parameter set in requests.request() method call 
@@ -68,7 +75,7 @@ These changes include:
         - This approach now has mutliple threads writing to the same variable (domain_stats). In order to prevent any collision, a thread lock as been implemented on the write function to this variable. I also moved the write operations to a new function for readability. 
         - Due to the timeout on the request, the request thread should always finish before the sleep interval in the looping thread. Still, starting too many threads can cause performance issues so an error message was added in the looping thread to notify you if the previous thread for that endpoint is still alive when a new thread is about to be created. 
 
-# Other Code Changes 
+## Other Code Changes 
 
 1. Input validation for yaml config file. 
     - The load_config function now validates the yaml file. It checks if the file is valid YAML, is not empty, and contains the required parameters (name and url). 
